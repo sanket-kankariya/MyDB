@@ -33,6 +33,12 @@ function findFunc() {
         if [[ ${query[2]} == '' ]]
         then
             jq '.' ${query[0]}.json
+        else
+            local key="${query[2]}"
+            local value="${query[3]}"
+            echo $key
+            echo $value
+            jq --arg k $key --arg v "$value" 'map(select(.[$k] == $v))' ${query[0]}.json
         fi
     else
         echo "${query[0]} collection doesnt exists"
